@@ -33,12 +33,8 @@ def getTwoSymbols(symbols, like):
         stockTwo.addLike()
     stockOne.save_to_db()
     stockTwo.save_to_db()
-    priceOne = requests.get(
-        f"https://repeated-alpaca.glitch.me/v1/stock/{symbolOne}/quote"
-    ).json()["latestPrice"]
-    priceTwo = requests.get(
-        f"https://repeated-alpaca.glitch.me/v1/stock/{symbolTwo}/quote"
-    ).json()["latestPrice"]
+    priceOne = getPrice(symbolOne)
+    priceTwo = getPrice(symbolTwo)
     return {
         "stockData": [
             {
@@ -63,7 +59,11 @@ def getOneSymbol(symbol, like):
     if like and (like == "true" or like == "True" or like == True):
         stock.addLike()
     stock.save_to_db()
-    price = requests.get(
+    price = getPrice(symbol)
+    return {"stockData": {"stock": symbol, "price": price, "likes": stock.likes}}
+
+
+def getPrice(symbol):
+    return requests.get(
         f"https://repeated-alpaca.glitch.me/v1/stock/{symbol}/quote"
     ).json()["latestPrice"]
-    return {"stockData": {"stock": symbol, "price": price, "likes": stock.likes}}
