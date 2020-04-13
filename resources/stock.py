@@ -19,6 +19,8 @@ class Stock(Resource):
 
 def getTwoSymbols(symbols, like):
     symbolOne, symbolTwo, *other = symbols
+    symbolOne = symbolOne.upper()
+    symbolTwo = symbolTwo.upper()
     stockOne = StockModel.find_by_symbol(symbolOne)
     if not stockOne:
         stockOne = StockModel(symbol=symbolOne)
@@ -43,6 +45,7 @@ def getTwoSymbols(symbols, like):
     }]}
 
 def getOneSymbol(symbol, like):
+    symbol = symbol.upper()
     stock = StockModel.find_by_symbol(symbol)
     if not stock:
         stock = StockModel(symbol=symbol)
