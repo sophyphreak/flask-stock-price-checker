@@ -15,11 +15,7 @@ class StockModel(db.Model):
         self.likes += 1
 
     def json(self):
-        return {
-            "_id": self._id,
-            "symbol": self.symbol,
-            "likes": self.likes
-        }
+        return {"_id": self._id, "symbol": self.symbol, "likes": self.likes}
 
     @classmethod
     def find_by_symbol(cls, symbol):
